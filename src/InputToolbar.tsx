@@ -31,6 +31,9 @@ const styles = StyleSheet.create({
   accessory: {
     height: 44,
   },
+  upperAccessory: {
+
+  },
 })
 
 export interface InputToolbarProps {
@@ -39,7 +42,9 @@ export interface InputToolbarProps {
   containerStyle?: StyleProp<ViewStyle>
   primaryStyle?: StyleProp<ViewStyle>
   accessoryStyle?: StyleProp<ViewStyle>
+  upperAccessoryStyle?: StyleProp<ViewStyle>
   renderAccessory?(props: InputToolbarProps): React.ReactNode
+  renderUpperAccessory?(props: InputToolbarProps): React.ReactNode
   renderActions?(props: Actions['props']): React.ReactNode
   renderSend?(props: Send['props']): React.ReactNode
   renderComposer?(props: Composer['props']): React.ReactNode
@@ -52,17 +57,20 @@ export default class InputToolbar extends React.Component<
 > {
   static defaultProps = {
     renderAccessory: null,
+    renderUpperAccessory: null,
     renderActions: null,
     renderSend: null,
     renderComposer: null,
     containerStyle: {},
     primaryStyle: {},
     accessoryStyle: {},
+    upperAccessoryStyle: {},
     onPressActionButton: () => {},
   }
 
   static propTypes = {
     renderAccessory: PropTypes.func,
+    renderUpperAccessory: PropTypes.func,
     renderActions: PropTypes.func,
     renderSend: PropTypes.func,
     renderComposer: PropTypes.func,
@@ -70,6 +78,7 @@ export default class InputToolbar extends React.Component<
     containerStyle: ViewPropTypes.style,
     primaryStyle: ViewPropTypes.style,
     accessoryStyle: ViewPropTypes.style,
+    upperAccessoryStyle: ViewPropTypes.style,
   }
 
   state = {
@@ -151,6 +160,17 @@ export default class InputToolbar extends React.Component<
     return null
   }
 
+  renderUpperAccessory() {
+    if (this.props.renderUpperAccessory) {
+      return (
+        <View style={[styles.upperAccessory, this.props.upperAccessoryStyle]}>
+          {this.props.renderUpperAccessory(this.props)}
+        </View>
+      )
+    }
+    return null
+  }
+
   render() {
     return (
       <View
@@ -162,6 +182,7 @@ export default class InputToolbar extends React.Component<
           ] as ViewStyle
         }
       >
+        {this.renderUpperAccessory()}
         <View style={[styles.primary, this.props.primaryStyle]}>
           {this.renderActions()}
           {this.renderComposer()}
