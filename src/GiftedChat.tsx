@@ -189,6 +189,8 @@ export interface GiftedChatProps<TMessage extends IMessage = IMessage> {
   renderSend?(props: Send['props']): React.ReactNode
   /*Custom second line of actions below the message composer */
   renderAccessory?(props: InputToolbar['props']): React.ReactNode
+  /*Custom line of actions above the message composer */
+  renderUpperAccessory?(props: InputToolbar['props']): React.ReactNode
   /*Callback when the Action button is pressed (if set, the default actionSheet will not be used) */
   onPressActionButton?(): void
   /* Callback when the input text changes */
@@ -272,6 +274,7 @@ class GiftedChat<TMessage extends IMessage = IMessage> extends React.Component<
     renderActions: null,
     renderSend: null,
     renderAccessory: null,
+    renderUpperAccessory: null,
     isKeyboardInternallyHandled: true,
     onPressActionButton: null,
     bottomOffset: 0,
@@ -339,6 +342,7 @@ class GiftedChat<TMessage extends IMessage = IMessage> extends React.Component<
     renderActions: PropTypes.func,
     renderSend: PropTypes.func,
     renderAccessory: PropTypes.func,
+    renderUpperAccessory: PropTypes.func,
     onPressActionButton: PropTypes.func,
     bottomOffset: PropTypes.number,
     minInputToolbarHeight: PropTypes.number,
