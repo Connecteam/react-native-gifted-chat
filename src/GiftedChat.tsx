@@ -584,7 +584,7 @@ class GiftedChat<TMessage extends IMessage = IMessage> extends React.Component<
     return (
       this.getBasicMessagesContainerHeight(composerHeight) -
       this.getKeyboardHeight() +
-      this.getBottomOffset()
+      this.getBottomOffset() - 100
     )
   }
 
