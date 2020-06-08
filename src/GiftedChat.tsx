@@ -558,6 +558,8 @@ class GiftedChat<TMessage extends IMessage = IMessage> extends React.Component<
   }
 
   getMinInputToolbarHeight() {
+    console.log(`getMinInputToolbarHeight ${this.props.upperAccessoryHeight!}`)
+
     const minHeight = this.props.minInputToolbarHeight! + this.props.upperAccessoryHeight!
 
     return this.props.renderAccessory ? minHeight * 2 : minHeight
@@ -773,6 +775,8 @@ class GiftedChat<TMessage extends IMessage = IMessage> extends React.Component<
     if (layout.height <= 0) {
       return
     }
+    console.log('onInitialLayoutViewLayout')
+
     this.notifyInputTextReset()
     this.setMaxHeight(layout.height)
     const newComposerHeight = this.props.minComposerHeight
@@ -789,12 +793,17 @@ class GiftedChat<TMessage extends IMessage = IMessage> extends React.Component<
   }
 
   onMainViewLayout = (e: any) => {
+    console.log('onMainViewLayout')
+
     // fix an issue when keyboard is dismissing during the initialization
     const { layout } = e.nativeEvent
     if (
       this.getMaxHeight() !== layout.height ||
       this.getIsFirstLayout() === true
     ) {
+
+      console.log('onMainViewLayout: doLogic')
+
       this.setMaxHeight(layout.height)
       this.setState({
         messagesContainerHeight:
