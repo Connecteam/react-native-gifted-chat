@@ -192,7 +192,7 @@ export interface GiftedChatProps<TMessage extends IMessage = IMessage> {
   /*Custom line of actions above the message composer */
   renderUpperAccessory?(props: InputToolbar['props']): React.ReactNode
   /*Upper accessory height - especially useful if dynamic */
-  getUpperAccessoryHeight?(): number
+  upperAccessoryHeight?: number
   /*Callback when the Action button is pressed (if set, the default actionSheet will not be used) */
   onPressActionButton?(): void
   /* Callback when the input text changes */
@@ -277,11 +277,11 @@ class GiftedChat<TMessage extends IMessage = IMessage> extends React.Component<
     renderSend: null,
     renderAccessory: null,
     renderUpperAccessory: null,
-    getUpperAccessoryHeight: null,
     isKeyboardInternallyHandled: true,
     onPressActionButton: null,
     bottomOffset: 0,
     minInputToolbarHeight: 44,
+    upperAccessoryHeight: 0,
     keyboardShouldPersistTaps: Platform.select({
       ios: 'never',
       android: 'always',
@@ -346,10 +346,10 @@ class GiftedChat<TMessage extends IMessage = IMessage> extends React.Component<
     renderSend: PropTypes.func,
     renderAccessory: PropTypes.func,
     renderUpperAccessory: PropTypes.func,
-    getUpperAccessoryHeight: PropTypes.func,
     onPressActionButton: PropTypes.func,
     bottomOffset: PropTypes.number,
     minInputToolbarHeight: PropTypes.number,
+    upperAccessoryHeight: PropTypes.number,
     listViewProps: PropTypes.object,
     keyboardShouldPersistTaps: PropTypes.oneOf(['always', 'never', 'handled']),
     onInputTextChanged: PropTypes.func,
@@ -558,11 +558,7 @@ class GiftedChat<TMessage extends IMessage = IMessage> extends React.Component<
   }
 
   getMinInputToolbarHeight() {
-    let minHeight = this.props.minInputToolbarHeight!
-
-    if (this.props.getUpperAccessoryHeight) {
-      minHeight += this.props.getUpperAccessoryHeight()
-    }
+    const minHeight = this.props.minInputToolbarHeight! + this.props.upperAccessoryHeight!
 
     return this.props.renderAccessory ? minHeight * 2 : minHeight
   }
