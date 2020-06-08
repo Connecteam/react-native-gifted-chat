@@ -191,6 +191,8 @@ export interface GiftedChatProps<TMessage extends IMessage = IMessage> {
   renderAccessory?(props: InputToolbar['props']): React.ReactNode
   /*Custom line of actions above the message composer */
   renderUpperAccessory?(props: InputToolbar['props']): React.ReactNode
+  /*Upper accessory height - especially useful if dynamic */
+  getUpperAccessoryHeight?(): number
   /*Callback when the Action button is pressed (if set, the default actionSheet will not be used) */
   onPressActionButton?(): void
   /* Callback when the input text changes */
@@ -275,6 +277,7 @@ class GiftedChat<TMessage extends IMessage = IMessage> extends React.Component<
     renderSend: null,
     renderAccessory: null,
     renderUpperAccessory: null,
+    getUpperAccessoryHeight: null,
     isKeyboardInternallyHandled: true,
     onPressActionButton: null,
     bottomOffset: 0,
@@ -343,6 +346,7 @@ class GiftedChat<TMessage extends IMessage = IMessage> extends React.Component<
     renderSend: PropTypes.func,
     renderAccessory: PropTypes.func,
     renderUpperAccessory: PropTypes.func,
+    getUpperAccessoryHeight: PropTypes.func,
     onPressActionButton: PropTypes.func,
     bottomOffset: PropTypes.number,
     minInputToolbarHeight: PropTypes.number,
@@ -554,9 +558,13 @@ class GiftedChat<TMessage extends IMessage = IMessage> extends React.Component<
   }
 
   getMinInputToolbarHeight() {
-    return this.props.renderAccessory
-      ? this.props.minInputToolbarHeight! * 2
-      : this.props.minInputToolbarHeight
+    let minHeight = this.props.minInputToolbarHeight!
+
+    if (this.props.getUpperAccessoryHeight) {
+      minHeight += this.props.getUpperAccessoryHeight()
+    }
+
+    return this.props.renderAccessory ? minHeight * 2 : minHeight
   }
 
   calculateInputToolbarHeight(composerHeight: number) {
@@ -584,7 +592,7 @@ class GiftedChat<TMessage extends IMessage = IMessage> extends React.Component<
     return (
       this.getBasicMessagesContainerHeight(composerHeight) -
       this.getKeyboardHeight() +
-      this.getBottomOffset() - 100
+      this.getBottomOffset()
     )
   }
 
