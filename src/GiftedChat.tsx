@@ -676,7 +676,7 @@ class GiftedChat<TMessage extends IMessage = IMessage> extends React.Component<
       </View>
     )
 
-    return this.props.isKeyboardInternallyHandled ? (
+    return this.props.isKeyboardInternallyHandled && !this.props.dontWrapWithKeyboardAvoidingView ? (
       <KeyboardAvoidingView enabled>{fragment}</KeyboardAvoidingView>
     ) : (
       fragment
