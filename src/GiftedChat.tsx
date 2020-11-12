@@ -90,6 +90,8 @@ export interface GiftedChatProps<TMessage extends IMessage = IMessage> {
   showAvatarForEveryMessage?: boolean
   /* Render the message avatar at the top of consecutive messages, rather than the bottom; default is false */
   isKeyboardInternallyHandled?: boolean
+  /* Prevents from wrapping the message container with KeyboardAvoidingView (causes animation issues on iOS) */
+  dontWrapWithKeyboardAvoidingView?: boolean
   /* Determine whether to handle keyboard awareness inside the plugin. If you have your own keyboard handling outside the plugin set this to false; default is true */
   renderAvatarOnTop?: boolean
   inverted?: boolean
@@ -278,6 +280,7 @@ class GiftedChat<TMessage extends IMessage = IMessage> extends React.Component<
     renderAccessory: null,
     renderUpperAccessory: null,
     isKeyboardInternallyHandled: true,
+    dontWrapWithKeyboardAvoidingView: false,
     onPressActionButton: null,
     bottomOffset: 0,
     minInputToolbarHeight: 44,
@@ -311,6 +314,7 @@ class GiftedChat<TMessage extends IMessage = IMessage> extends React.Component<
     timeFormat: PropTypes.string,
     dateFormat: PropTypes.string,
     isKeyboardInternallyHandled: PropTypes.bool,
+    dontWrapWithKeyboardAvoidingView
     loadEarlier: PropTypes.bool,
     onLoadEarlier: PropTypes.func,
     isLoadingEarlier: PropTypes.bool,
