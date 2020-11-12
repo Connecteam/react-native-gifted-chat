@@ -314,7 +314,7 @@ class GiftedChat<TMessage extends IMessage = IMessage> extends React.Component<
     timeFormat: PropTypes.string,
     dateFormat: PropTypes.string,
     isKeyboardInternallyHandled: PropTypes.bool,
-    dontWrapWithKeyboardAvoidingView
+    dontWrapWithKeyboardAvoidingView: PropTypes.bool,
     loadEarlier: PropTypes.bool,
     onLoadEarlier: PropTypes.func,
     isLoadingEarlier: PropTypes.bool,
